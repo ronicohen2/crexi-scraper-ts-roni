@@ -2,10 +2,10 @@
   "name": "monto-code-test",
   "version": "1.0.0",
   "description": "Scraping code test.",
-  "main": "index.js",
+  "main": "index.ts",
   "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "node --loader ts-node/esm --enable-source-maps --env-file=.env index.ts"
   },
   "repository": {
     "type": "git",
@@ -17,8 +17,9 @@
     "url": "https://github.com/ibrahim-netto/monto-code-test/issues"
   },
   "homepage": "https://github.com/ibrahim-netto/monto-code-test#readme",
-  "dependencies": {
-    "delay": "^6.0.0",
-    "node-fetch": "^3.3.2"
+  "devDependencies": {
+    "@types/node": "^22.15.30",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.3"
   }
 }
