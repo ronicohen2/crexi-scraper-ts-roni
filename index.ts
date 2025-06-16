@@ -1,4 +1,4 @@
-import { CrexiScraper } from './src/scraper.js';
+import { CrexiScraper } from './src/scraper';
 
 (async () => {
     /**
