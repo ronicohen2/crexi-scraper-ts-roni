@@ -1,5 +1,7 @@
 import { ENTRIES_PER_PAGE } from "./constants";
 import { CrexiProperty, MontoProperty } from "./types";
+import { STATES_DATABASE, StateMetadata } from "./States Database";
+import { calculateViewport } from "./Viewport Calculation";
 /*
  * Search Crexi properties by Google Place ID.
  */
@@ -9,11 +11,25 @@ export async function searchCrexiProperties(rootUrl: string, placeId: string, pa
     const offset: number = ENTRIES_PER_PAGE * (page - 1);
 
     const pageSize = 60;
+    const metadata = STATES_DATABASE.find(state => state.placeId === placeId);
+    if (!metadata){
+        throw new Error(`No metadata found for Place ID: ${placeId}`);
+    }
+
+    const viewport = calculateViewport(metadata.lat, metadata.lng);
+    
     const body = {
         "locations": [
             {
-                "placeId": `${placeId}`, //google placeId for the target city.
+                "placeId": metadata.placeId,
                 "type": "city",
+                "stateCode": metadata.code,
+                "location": {
+                    "latitude": metadata.lat,
+                    "longitude": metadata.lng
+                },
+                "viewport": viewport,
+                "polygons": metadata.polygons
             }
         ],
         "count": 1500, //maximum number of result
