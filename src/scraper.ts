@@ -28,7 +28,7 @@ export class CrexiScraper {
                 console.error(`Error fetching page ${page}:`, error);
                 break;
             }
-        } while (allProperties.length >= 1500);
+        } while (allProperties.length === ENTRIES_PER_PAGE && allProperties.length < 1500);
 
         console.info(`${this.#name} scraper ended.`);
         return allProperties.map(property => mapMontoProperty(property));
