@@ -9,12 +9,11 @@ export function mongoFilter(query: any): Record<string, any> {
     if (stateCode) {
         filter.stateCode = stateCode;
     }
-    if (price) {
+    if (price && !isNaN(Number(price))) {
         filter.price = Number(price);
     }
-    if (createdAt) {
+    if (createdAt && !isNaN(Date.parse(createdAt))) {
         filter.createdAt = new Date(createdAt);
-    }
-
+    }    
     return filter;
 }  

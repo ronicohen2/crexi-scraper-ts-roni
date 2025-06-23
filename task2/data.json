@@ -1,0 +1,292 @@
+[
+  {
+    "id": "1",
+    "name": "Sunset Heights Apartments",
+    "price": 2500000,
+    "types": [
+      "Residential",
+      "Multi-Family"
+    ],
+    "location": "Los Angeles",
+    "stateCode": "CA",
+    "status": "Active",
+    "imageUrl": "https://example.com/properties/sunset-heights.jpg",
+    "createdAt": "2024-03-15T10:00:00Z"
+  },
+  {
+    "id": "2",
+    "name": "Downtown Office Plaza",
+    "price": 8500000,
+    "types": [
+      "Commercial",
+      "Office"
+    ],
+    "location": "New York",
+    "stateCode": "NY",
+    "status": "Active",
+    "imageUrl": "https://example.com/properties/downtown-plaza.jpg",
+    "createdAt": "2024-03-14T15:30:00Z"
+  },
+  {
+    "id": "3",
+    "name": "Riverside Retail Center",
+    "price": 4200000,
+    "types": [
+      "Commercial",
+      "Retail"
+    ],
+    "location": "Chicago",
+    "stateCode": "IL",
+    "status": "Pending",
+    "imageUrl": "https://example.com/properties/riverside-retail.jpg",
+    "createdAt": "2024-03-13T09:15:00Z"
+  },
+  {
+    "id": "4",
+    "name": "Oakwood Industrial Park",
+    "price": 12500000,
+    "types": [
+      "Industrial",
+      "Warehouse"
+    ],
+    "location": "Houston",
+    "stateCode": "TX",
+    "status": "Active",
+    "imageUrl": "https://example.com/properties/oakwood-industrial.jpg",
+    "createdAt": "2024-03-12T14:45:00Z"
+  },
+  {
+    "id": "5",
+    "name": "Pine Valley Estates",
+    "price": 3800000,
+    "types": [
+      "Residential",
+      "Single-Family"
+    ],
+    "location": "Seattle",
+    "stateCode": "WA",
+    "status": "Active",
+    "imageUrl": "https://example.com/properties/pine-valley.jpg",
+    "createdAt": "2024-03-11T11:20:00Z"
+  },
+  {
+    "id": "6",
+    "name": "Tech Hub Office Complex",
+    "price": 9500000,
+    "types": [
+      "Commercial",
+      "Office",
+      "Tech"
+    ],
+    "location": "Austin",
+    "stateCode": "TX",
+    "status": "Active",
+    "imageUrl": "https://example.com/properties/tech-hub.jpg",
+    "createdAt": "2024-03-10T16:00:00Z"
+  },
+  {
+    "id": "7",
+    "name": "Harbor View Apartments",
+    "price": 3200000,
+    "types": [
+      "Residential",
+      "Multi-Family"
+    ],
+    "location": "Miami",
+    "stateCode": "FL",
+    "status": "Pending",
+    "imageUrl": "https://example.com/properties/harbor-view.jpg",
+    "createdAt": "2024-03-09T13:30:00Z"
+  },
+  {
+    "id": "8",
+    "name": "Metro Shopping Mall",
+    "price": 15000000,
+    "types": [
+      "Commercial",
+      "Retail",
+      "Entertainment"
+    ],
+    "location": "Las Vegas",
+    "stateCode": "NV",
+    "status": "Active",
+    "imageUrl": "https://example.com/properties/metro-mall.jpg",
+    "createdAt": "2024-03-08T10:45:00Z"
+  },
+  {
+    "id": "9",
+    "name": "Green Valley Industrial",
+    "price": 7800000,
+    "types": [
+      "Industrial",
+      "Manufacturing"
+    ],
+    "location": "Denver",
+    "stateCode": "CO",
+    "status": "Active",
+    "imageUrl": "https://example.com/properties/green-valley.jpg",
+    "createdAt": "2024-03-07T15:15:00Z"
+  },
+  {
+    "id": "10",
+    "name": "Luxury Condo Tower",
+    "price": 4500000,
+    "types": [
+      "Residential",
+      "Luxury",
+      "Condo"
+    ],
+    "location": "San Francisco",
+    "stateCode": "CA",
+    "status": "Active",
+    "imageUrl": "https://example.com/properties/luxury-tower.jpg",
+    "createdAt": "2024-03-06T09:30:00Z"
+  },
+  {
+    "id": "11",
+    "name": "Medical Office Park",
+    "price": 6800000,
+    "types": [
+      "Commercial",
+      "Medical",
+      "Office"
+    ],
+    "location": "Boston",
+    "stateCode": "MA",
+    "status": "Pending",
+    "imageUrl": "https://example.com/properties/medical-park.jpg",
+    "createdAt": "2024-03-05T14:00:00Z"
+  },
+  {
+    "id": "12",
+    "name": "Suburban Retail Plaza",
+    "price": 5200000,
+    "types": [
+      "Commercial",
+      "Retail"
+    ],
+    "location": "Phoenix",
+    "stateCode": "AZ",
+    "status": "Active",
+    "imageUrl": "https://example.com/properties/suburban-plaza.jpg",
+    "createdAt": "2024-03-04T11:45:00Z"
+  },
+  {
+    "id": "13",
+    "name": "Waterfront Warehouse",
+    "price": 8900000,
+    "types": [
+      "Industrial",
+      "Warehouse",
+      "Logistics"
+    ],
+    "location": "Portland",
+    "stateCode": "OR",
+    "status": "Active",
+    "imageUrl": "https://example.com/properties/waterfront-warehouse.jpg",
+    "createdAt": "2024-03-03T16:30:00Z"
+  },
+  {
+    "id": "14",
+    "name": "Garden Apartments",
+    "price": 2900000,
+    "types": [
+      "Residential",
+      "Multi-Family"
+    ],
+    "location": "Atlanta",
+    "stateCode": "GA",
+    "status": "Active",
+    "imageUrl": "https://example.com/properties/garden-apts.jpg",
+    "createdAt": "2024-03-02T13:15:00Z"
+  },
+  {
+    "id": "15",
+    "name": "Tech Campus",
+    "price": 25000000,
+    "types": [
+      "Commercial",
+      "Office",
+      "Tech"
+    ],
+    "location": "San Jose",
+    "stateCode": "CA",
+    "status": "Pending",
+    "imageUrl": "https://example.com/properties/tech-campus.jpg",
+    "createdAt": "2024-03-01T10:00:00Z"
+  },
+  {
+    "id": "16",
+    "name": "Historic Office Building",
+    "price": 7200000,
+    "types": [
+      "Commercial",
+      "Office",
+      "Historic"
+    ],
+    "location": "Philadelphia",
+    "stateCode": "PA",
+    "status": "Active",
+    "imageUrl": "https://example.com/properties/historic-office.jpg",
+    "createdAt": "2024-02-29T15:45:00Z"
+  },
+  {
+    "id": "17",
+    "name": "Industrial Distribution Center",
+    "price": 11000000,
+    "types": [
+      "Industrial",
+      "Distribution"
+    ],
+    "location": "Dallas",
+    "stateCode": "TX",
+    "status": "Active",
+    "imageUrl": "https://example.com/properties/distribution-center.jpg",
+    "createdAt": "2024-02-28T09:30:00Z"
+  },
+  {
+    "id": "18",
+    "name": "Luxury Townhomes",
+    "price": 3500000,
+    "types": [
+      "Residential",
+      "Luxury",
+      "Townhouse"
+    ],
+    "location": "Washington DC",
+    "stateCode": "DC",
+    "status": "Active",
+    "imageUrl": "https://example.com/properties/luxury-townhomes.jpg",
+    "createdAt": "2024-02-27T14:15:00Z"
+  },
+  {
+    "id": "19",
+    "name": "Mixed-Use Development",
+    "price": 18000000,
+    "types": [
+      "Mixed-Use",
+      "Residential",
+      "Commercial"
+    ],
+    "location": "San Diego",
+    "stateCode": "CA",
+    "status": "Pending",
+    "imageUrl": "https://example.com/properties/mixed-use.jpg",
+    "createdAt": "2024-02-26T11:00:00Z"
+  },
+  {
+    "id": "20",
+    "name": "Medical Research Center",
+    "price": 15000000,
+    "types": [
+      "Commercial",
+      "Medical",
+      "Research"
+    ],
+    "location": "Raleigh",
+    "stateCode": "NC",
+    "status": "Active",
+    "imageUrl": "https://example.com/properties/medical-research.jpg",
+    "createdAt": "2024-02-25T16:45:00Z"
+  }
+]

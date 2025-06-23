@@ -1,0 +1,28 @@
+{
+  "name": "monto-code-test",
+  "version": "1.0.0",
+  "description": "Scraping code test.",
+  "main": "index.ts",
+  "type": "module",
+  "scripts": {
+    "dev": "node --loader ts-node/esm --experimental-specifier-resolution=node --enable-source-maps index.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ibrahim-netto/monto-code-test.git"
+  },
+  "author": "Ibrahim Netto <ibrahim@montopay.com>",
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/ibrahim-netto/monto-code-test/issues"
+  },
+  "homepage": "https://github.com/ibrahim-netto/monto-code-test#readme",
+  "devDependencies": {
+    "@types/node": "^22.15.30",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.3"
+  },
+  "dependencies": {
+    "ajv": "^8.17.1"
+  }
+}
