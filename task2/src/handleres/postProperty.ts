@@ -5,10 +5,24 @@ export async function postPropertiesHandler(fastify, request: FastifyRequest, re
     if (!fastify.mongo.db) {
         return reply.code(500).send({ error: 'Database not available' });
     }
-    const body = request.body as { name: string; price: number };
-    const newProperty = {
+    const body = request.body as MontoProperty;
+
+    const requiredFields = ['id', 'name', 'price', 'types', 'location', 'stateCode', 'status', 'imageUrl'];
+    for (const field of requiredFields) {
+        if (!body[field]) {
+            return reply.code(400).send({ error: `Missing field: ${field}` });
+        }
+    }
+
+    const newProperty: MontoProperty = {
+        id: body.id,
         name: body.name,
         price: body.price,
+        types: body.types,
+        location: body.location,
+        stateCode: body.stateCode,
+        status: body.status,
+        imageUrl: body.imageUrl,
         createdAt: new Date()
     };
 

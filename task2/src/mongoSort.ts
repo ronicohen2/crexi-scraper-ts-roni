@@ -1,17 +1,12 @@
 export function mongoSort(query: any): Record<string, 1 | -1> {
+  const sortBy = typeof query.sortBy === 'string' ? query.sortBy : undefined;
+  const sortOrder = query.sortOrder === 'desc' ? -1 : 1;
 
-    const { sortBy, sortOrder = 'asc' } = query as {
-        sortBy?: string;
-        sortOrder?: 'asc' | 'desc';
-    };
+  const validSortFields = ['createdAt', 'price'];
 
-    const validSortFields = ['createdAt', 'price'];
+  if (sortBy && validSortFields.includes(sortBy)) {
+      return { [sortBy]: sortOrder };
+  }
 
-    if (sortBy && validSortFields.includes(sortBy)) {
-        return {
-          [sortBy]: sortOrder === 'desc' ? -1 : 1
-        };
-      }
-    
-    return {};
-}  
+  return {};
+}

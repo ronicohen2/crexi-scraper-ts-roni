@@ -1,12 +1,9 @@
 // Import required dependencies
+
 import Fastify from 'fastify';
 import fastifyMongoDb from '@fastify/mongodb';
 import { DEFAULT_PORT, MONGODB_URI } from './src/constants';
-import { mongoFilter } from './src/mongoFilter';
-import { mongoSort } from './src/mongoSort';
-import { MontoProperty } from './src/types';
 import { ObjectId } from 'mongodb';
-import { getFromCache, setCache } from './src/cache';
 
 
 // Initialize Fastify server with logging enabled
@@ -16,105 +13,44 @@ const fastify = Fastify({
 
 // Register MongoDB plugin with connection URL
 fastify.register(fastifyMongoDb, {
-    url: 'mongodb://localhost:27017/Test'
+    url: MONGODB_URI
 });
 
-import { getPropertiesHandler } from './src/controllers/getProperties';
-
-const getSchema = { //json schema to validate
-    querystring: {
-        type: "object",
-        properties: { //just safe types
-            count: { type: "number", minimum: 1, maximum: 100 },
-            offset: { type: "number", minimum: 0 },
-            sortBy: { type: "string" },
-            sortOrder: { type: "string", enum: ["asc", "desc"] },
-            stateCode: { type: "string" },
-            price: { type: "number" }
-        },
-        required: [],
-        additionalProperties: false
-    }
-};
+import { getPropertiesHandler } from './src/handleres/getProperties';
+import { getPropertiesSchema } from './src/schemas/getPropertiesSchema';
 
 // GET /properties endpoint - Retrieve properties with filtering, sorting, and pagination
 fastify.get('/properties', {
     handler: (request, reply) => getPropertiesHandler(fastify, request, reply),
-    schema: getSchema
+    schema: getPropertiesSchema
 });
 
-import { postPropertiesHandler } from './src/controllers/postProperty';
-
-const postSchema = { //json schema to validate
-    body: {
-        type: "object",
-        properties: { //just safe types
-            name: {
-                type: "string",
-            },
-            price: {
-                type: "number",
-                minimum: 0
-            }
-        },
-        required: ["name", "price"],
-        additionalProperties: false
-    }
-};
+import { postPropertiesHandler } from './src/handleres/postProperty';
+import { postPropertySchema } from './src/schemas/postPropertiesSchema';
 
 // POST /properties endpoint - Create a new property
 fastify.post('/properties', {
     handler: (request, reply) => postPropertiesHandler(fastify, request, reply),
-    schema: postSchema
+    schema: postPropertySchema
 });
 
-import { putPropertiesHandler } from './src/controllers/putProperty';
-
-const putSchema = { //json schema to validate
-    body: {
-        type: "object",
-        properties: { //just safe types
-            name: {
-                type: "string",
-            },
-            price: {
-                type: "number",
-                minimum: 0
-            }
-        },
-        required: ["name", "price"],
-        additionalProperties: false
-    }
-};
+import { putPropertiesHandler } from './src/handleres/putProperty';
+import { putPropertySchema } from './src/schemas/putPropertySchema';
 
 // PUT /properties/:id endpoint - Update an existing property
 fastify.put('/properties/:id', {
     handler: (request, reply) => putPropertiesHandler(fastify, request, reply),
-    schema: putSchema
+    schema: putPropertySchema
 });
 
-fastify.delete('/properties/:id', async (request, reply) => {
-    if (!fastify.mongo.db) {
-        return reply.code(500).send({ error: 'Database not available' });
-    }
+import { deletePropertyHandler } from './src/handleres/deleteProperty';
+import { deletePropertySchema } from './src/schemas/deletePropertySchema';
 
-    // Validate MongoDB ObjectId format
-    const { id } = request.params as { id: string };
-    if (!ObjectId.isValid(id)) {
-        return reply.code(400).send({ error: 'Invalid ID format' });
-    }
-
-    const _id = new ObjectId(id);
-
-    // Delete the property and verify it existed
-    const result = await fastify.mongo.db.collection('properties').deleteOne({ _id });
-
-    if (result.deletedCount == 0) {
-        return reply.code(404).send({ error: 'Property not found' })
-    }
-
-    return reply.code(200).send({ message: 'Property deleted successfully' });
+fastify.delete('/properties/:id', {
+  handler: (req, res) => deletePropertyHandler(fastify, req, res),
+  schema: deletePropertySchema
 });
+
 // Start the server
 fastify.listen({ port: DEFAULT_PORT, host: 'localhost' }).then(() => {
     fastify.log.info(`Server is running on http://localhost:${DEFAULT_PORT}`);
