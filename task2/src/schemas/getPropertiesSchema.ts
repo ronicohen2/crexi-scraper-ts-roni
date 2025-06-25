@@ -24,14 +24,6 @@ export const getPropertiesSchema = {
         'createdAt.gte': { type: 'string', format: 'date-time' },
         'createdAt.lt': { type: 'string', format: 'date-time' },
         'createdAt.lte': { type: 'string', format: 'date-time' },
-  
-        // type filtering (single or multiple types)
-        types: {
-          anyOf: [
-            { type: 'string' },
-            { type: 'array', items: { type: 'string' } }
-          ]
-        }
       },
       additionalProperties: false
     }

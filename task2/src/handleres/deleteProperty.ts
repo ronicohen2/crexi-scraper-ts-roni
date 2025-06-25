@@ -1,5 +1,4 @@
 import { FastifyReply, FastifyRequest } from 'fastify';
-import { ObjectId } from 'mongodb';
 
 export async function deletePropertyHandler(fastify, request: FastifyRequest, reply: FastifyReply) {
     if (!fastify.mongo.db) {
@@ -8,14 +7,9 @@ export async function deletePropertyHandler(fastify, request: FastifyRequest, re
 
     // Validate MongoDB ObjectId format
     const { id } = request.params as { id: string };
-    if (!ObjectId.isValid(id)) {
-        return reply.code(400).send({ error: 'Invalid ID format' });
-    }
-
-    const _id = new ObjectId(id);
 
     // Delete the property and verify it existed
-    const result = await fastify.mongo.db.collection('properties').deleteOne({ _id });
+    const result = await fastify.mongo.db.collection('properties').deleteOne({ id });
 
     if (result.deletedCount == 0) {
         return reply.code(404).send({ error: 'Property not found' })

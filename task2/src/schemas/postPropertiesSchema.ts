@@ -14,7 +14,7 @@ export const postPropertySchema = {
       },
       required: [
         "id", "name", "price", "types", "location", "stateCode",
-        "status", "imageUrl", "createdAt"
+        "status", "imageUrl"
       ],
       additionalProperties: false
     }

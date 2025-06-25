@@ -1,6 +1,5 @@
 import { FastifyReply, FastifyRequest } from 'fastify';
 import { MontoProperty } from '../types';
-import { ObjectId } from '@fastify/mongodb';
 
 export async function putPropertiesHandler(fastify, request: FastifyRequest, reply: FastifyReply) {
     if (!fastify.mongo.db) {
@@ -9,11 +8,6 @@ export async function putPropertiesHandler(fastify, request: FastifyRequest, rep
 
     // Validate MongoDB ObjectId format
     const { id } = request.params as { id: string };
-    if (!ObjectId.isValid(id)) {
-        return reply.code(400).send({ error: 'Invalid ID format' });
-    }
-
-    const _id = new ObjectId(id);
 
     // Validate update data
     const updateData = request.body as Partial<MontoProperty>;
@@ -31,7 +25,7 @@ export async function putPropertiesHandler(fastify, request: FastifyRequest, rep
 
     // Update the property and verify it exists
     const result = await fastify.mongo.db.collection('properties').updateOne(
-        { _id },
+        { id },
         { $set: updateData }
     );
 
@@ -40,7 +34,7 @@ export async function putPropertiesHandler(fastify, request: FastifyRequest, rep
     }
 
     // Fetch and return the updated property
-    const updateProperty = await fastify.mongo.db.collection('properties').findOne({ _id });
+    const updateProperty = await fastify.mongo.db.collection('properties').findOne({ id });
 
     return reply.code(200).send({ data: updateProperty });
 };

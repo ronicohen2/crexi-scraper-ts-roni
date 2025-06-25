@@ -1,9 +1,9 @@
-import Fastify from 'fastify';
+import { FastifyReply, FastifyRequest } from 'fastify';
 import { getFromCache, setCache } from '../cache';
 import { mongoFilter } from '../mongoFilter';
 import { mongoSort } from '../mongoSort';
 
-export async function getPropertiesHandler(fastify, request: any, reply: any) {
+export async function getPropertiesHandler(fastify, request: FastifyRequest, reply: FastifyReply) {
     if (!fastify.mongo.db) {
         return reply.code(500).send({ error: 'Database not available' });
     }

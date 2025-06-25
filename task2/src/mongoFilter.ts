@@ -33,13 +33,5 @@ export function mongoFilter(query: getPropertiesQuery): Record<string, any> {
         filter.createdAt = dateOps;
     }
 
-    // types filter - support one or more types using $in
-    if (query.types) {
-        if (Array.isArray(query.types)) {
-            filter.types = { $in: query.types };
-        } else if (typeof query.types === 'string') {
-            filter.types = { $in: [query.types] };
-        }
-    }
     return filter;
 }  
