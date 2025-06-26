@@ -2,7 +2,7 @@ import { Ajv } from 'ajv';
 const ajv = new Ajv();
 
 export type MontoProperty = { //not chacking anything when the code run
-    id: string;
+    _id?: string;
     name: string;
     price: number;
     types: string[];
@@ -16,7 +16,6 @@ export type MontoProperty = { //not chacking anything when the code run
 export const MontoPropertySchema = { //json schema to validate
     type: "object",
     properties: {
-        id: { type: "string" },
         name: { type: "string" },
         price: { type: "number" },
         types: { type: "array", items: { type: "string" } },
@@ -26,7 +25,7 @@ export const MontoPropertySchema = { //json schema to validate
         imageUrl: { type: "string" },
         createdAt: { type: "string", format: "date-time" }
     },
-    required: ["id","name","price","types", "location","stateCode", "status","imageUrl","createdAt"],
+    required: ["name","price","types", "location","stateCode", "status","imageUrl","createdAt"],
     additionalProperties: false
 };
 

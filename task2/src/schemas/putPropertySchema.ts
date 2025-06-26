@@ -3,9 +3,9 @@ import { MontoPropertySchema } from '../types';
 export const updatePropertyParamsSchema = {
     type: "object",
     properties: {
-        id: { type: "string", minLength: 1 }
+        id: { type: "string", pattern: "^[a-fA-F0-9]{24}$" }
     },
-    required: ["id"],
+    required: [],
     additionalProperties: false
 };
 

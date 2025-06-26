@@ -1,5 +1,6 @@
 import { FastifyReply, FastifyRequest } from 'fastify';
 import { MontoProperty } from '../types';
+import { ObjectId } from 'mongodb';
 
 export async function putPropertiesHandler(fastify, request: FastifyRequest, reply: FastifyReply) {
     if (!fastify.mongo.db) {
@@ -8,6 +9,10 @@ export async function putPropertiesHandler(fastify, request: FastifyRequest, rep
 
     // Validate MongoDB ObjectId format
     const { id } = request.params as { id: string };
+    if (!ObjectId.isValid(id)) {
+        return reply.code(400).send({ error: 'Invalid ObjectId format' });
+    }
+    const objectId = new ObjectId(id);
 
     // Validate update data
     const updateData = request.body as Partial<MontoProperty>;
@@ -15,26 +20,16 @@ export async function putPropertiesHandler(fastify, request: FastifyRequest, rep
         return reply.code(400).send({ error: 'No data provided for update' });
     }
 
-    // Validate data types for price and name
-    if ('price' in updateData && typeof updateData.price !== 'number') {
-        return reply.code(400).send({ error: 'Invalid price format' });
-    }
-    if ('name' in updateData && typeof updateData.name !== 'string') {
-        return reply.code(400).send({ error: 'Invalid name format' });
-    }
-
     // Update the property and verify it exists
-    const result = await fastify.mongo.db.collection('properties').updateOne(
-        { id },
-        { $set: updateData }
+    const result = await fastify.mongo.db.collection('properties').findOneAndUpdate(
+        { _id: objectId },
+        { $set: updateData },
+        { returnDocument: 'after' }
     );
 
-    if (result.matchedCount == 0) {
+    if (!result || !result.value) {
         return reply.code(404).send({ error: 'Property not found' })
     }
 
-    // Fetch and return the updated property
-    const updateProperty = await fastify.mongo.db.collection('properties').findOne({ id });
-
-    return reply.code(200).send({ data: updateProperty });
+    return reply.code(200).send({ data: result.value });
 };

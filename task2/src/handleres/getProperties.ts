@@ -15,11 +15,7 @@ export async function getPropertiesHandler(fastify, request: FastifyRequest, rep
         return reply.send(cachedResult);
     }
 
-    // Extract and set default values for pagination parameters
-    const { count = '10', offset = '0' } = request.query as {
-        count?: string;
-        offset?: string;
-    };
+    const { count, offset } = request.query as any;
 
     // Apply filters and sorting based on query parameters
     const filter = mongoFilter(request.query);
@@ -29,7 +25,7 @@ export async function getPropertiesHandler(fastify, request: FastifyRequest, rep
     const total = await fastify.mongo.db.collection('properties').countDocuments(filter);
 
     // Fetch properties with pagination, filtering, and sorting
-    const properties = await fastify.mongo.db.collection('properties')
+    const properties = await fastify.mongo.db.collection('properties') //promise.all
         .find(filter)
         .sort(sort)
         .skip(Number(offset))

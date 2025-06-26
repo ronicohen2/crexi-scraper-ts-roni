@@ -1,10 +1,16 @@
 // Import required dependencies
-
 import Fastify from 'fastify';
 import fastifyMongoDb from '@fastify/mongodb';
 import { DEFAULT_PORT, MONGODB_URI } from './src/constants';
 import { ObjectId } from 'mongodb';
-
+import { getPropertiesHandler } from './src/handleres/getProperties';
+import { getPropertiesSchema } from './src/schemas/getPropertiesSchema'; 
+import { postPropertiesHandler } from './src/handleres/postProperty';
+import { postPropertySchema } from './src/schemas/postPropertiesSchema'; 
+import { putPropertiesHandler } from './src/handleres/putProperty';
+import { putPropertySchema } from './src/schemas/putPropertySchema';
+import { deletePropertyHandler } from './src/handleres/deleteProperty';
+import { deletePropertySchema } from './src/schemas/deletePropertySchema';
 
 // Initialize Fastify server with logging enabled
 const fastify = Fastify({
@@ -16,17 +22,11 @@ fastify.register(fastifyMongoDb, {
     url: MONGODB_URI
 });
 
-import { getPropertiesHandler } from './src/handleres/getProperties';
-import { getPropertiesSchema } from './src/schemas/getPropertiesSchema';
-
 // GET /properties endpoint - Retrieve properties with filtering, sorting, and pagination
 fastify.get('/properties', {
     handler: (request, reply) => getPropertiesHandler(fastify, request, reply),
     schema: getPropertiesSchema
 });
-
-import { postPropertiesHandler } from './src/handleres/postProperty';
-import { postPropertySchema } from './src/schemas/postPropertiesSchema';
 
 // POST /properties endpoint - Create a new property
 fastify.post('/properties', {
@@ -34,18 +34,13 @@ fastify.post('/properties', {
     schema: postPropertySchema
 });
 
-import { putPropertiesHandler } from './src/handleres/putProperty';
-import { putPropertySchema } from './src/schemas/putPropertySchema';
-
 // PUT /properties/:id endpoint - Update an existing property
 fastify.put('/properties/:id', {
     handler: (request, reply) => putPropertiesHandler(fastify, request, reply),
     schema: putPropertySchema
 });
 
-import { deletePropertyHandler } from './src/handleres/deleteProperty';
-import { deletePropertySchema } from './src/schemas/deletePropertySchema';
-
+//DELETE /properties/:id endpoint - Delete an existing property
 fastify.delete('/properties/:id', {
   handler: (req, res) => deletePropertyHandler(fastify, req, res),
   schema: deletePropertySchema

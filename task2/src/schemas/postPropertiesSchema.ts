@@ -13,7 +13,7 @@ export const postPropertySchema = {
         createdAt: { type: "string", format: "date-time" }
       },
       required: [
-        "id", "name", "price", "types", "location", "stateCode",
+        "name", "price", "types", "location", "stateCode",
         "status", "imageUrl"
       ],
       additionalProperties: false
