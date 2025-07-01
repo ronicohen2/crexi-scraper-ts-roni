@@ -23,6 +23,5 @@ export async function postPropertiesHandler(fastify, request: FastifyRequest, re
     };
 
     await fastify.mongo.db.collection('properties').insertOne(newProperty);
-    return reply.code(201).send({ data: newProperty, id: mongoId });
-
+    return reply.code(201).send({ data: newProperty });
 };

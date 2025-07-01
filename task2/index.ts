@@ -4,18 +4,23 @@ import fastifyMongoDb from '@fastify/mongodb';
 import { DEFAULT_PORT, MONGODB_URI } from './src/constants';
 import { ObjectId } from 'mongodb';
 import { getPropertiesHandler } from './src/handleres/getProperties';
-import { getPropertiesSchema } from './src/schemas/getPropertiesSchema'; 
+import { getPropertiesSchema } from './src/schemas/getPropertiesSchema';
 import { postPropertiesHandler } from './src/handleres/postProperty';
-import { postPropertySchema } from './src/schemas/postPropertiesSchema'; 
+import { postPropertySchema } from './src/schemas/postPropertiesSchema';
 import { putPropertiesHandler } from './src/handleres/putProperty';
 import { putPropertySchema } from './src/schemas/putPropertySchema';
 import { deletePropertyHandler } from './src/handleres/deleteProperty';
 import { deletePropertySchema } from './src/schemas/deletePropertySchema';
 
+// Import Sentry for error tracking
+import * as Sentry from '@sentry/node';
+
 // Initialize Fastify server with logging enabled
 const fastify = Fastify({
     logger: true
 });
+
+Sentry.setupFastifyErrorHandler(fastify);
 
 // Register MongoDB plugin with connection URL
 fastify.register(fastifyMongoDb, {
@@ -42,12 +47,20 @@ fastify.put('/properties/:id', {
 
 //DELETE /properties/:id endpoint - Delete an existing property
 fastify.delete('/properties/:id', {
-  handler: (req, res) => deletePropertyHandler(fastify, req, res),
-  schema: deletePropertySchema
+    handler: (req, res) => deletePropertyHandler(fastify, req, res),
+    schema: deletePropertySchema
 });
+
+// Add a simple root route
+fastify.get("/", function rootHandler(request, reply) {
+  reply.send("Hello world!");
+});
+
 
 // Start the server
-fastify.listen({ port: DEFAULT_PORT, host: 'localhost' }).then(() => {
-    fastify.log.info(`Server is running on http://localhost:${DEFAULT_PORT}`);
+fastify.listen({ port: DEFAULT_PORT, host: 'localhost' }).then(() => 
+    fastify.log.info(`Server is running on http://localhost:${DEFAULT_PORT}`)
+).catch(err => {
+    fastify.log.error(err);
+    process.exit(1);
 });
-

@@ -4,7 +4,7 @@ export const getPropertiesSchema = {
       properties: {
         count: { type: 'number', minimum: 1, maximum: 100, default: 10 },
         offset: { type: 'number', minimum: 0, default: 0 },
-        sortBy: { type: 'string', enum: ['createdAt', 'price'] },
+        sortBy: { type: 'string', enum: ['createdAt', 'price'] }, //checking twice 
         sortOrder: { type: 'string', enum: ['asc', 'desc'], default: 'asc' },
   
         stateCode: { type: 'string' },

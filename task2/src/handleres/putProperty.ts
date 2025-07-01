@@ -1,6 +1,7 @@
 import { FastifyReply, FastifyRequest } from 'fastify';
 import { MontoProperty } from '../types';
 import { ObjectId } from 'mongodb';
+import { dataloaderIntegration } from '@sentry/node';
 
 export async function putPropertiesHandler(fastify, request: FastifyRequest, reply: FastifyReply) {
     if (!fastify.mongo.db) {
@@ -21,15 +22,24 @@ export async function putPropertiesHandler(fastify, request: FastifyRequest, rep
     }
 
     // Update the property and verify it exists
-    const result = await fastify.mongo.db.collection('properties').findOneAndUpdate(
+    const result = await fastify.mongo.db.collection('properties').updateOne(
         { _id: objectId },
         { $set: updateData },
-        { returnDocument: 'after' }
     );
 
-    if (!result || !result.value) {
-        return reply.code(404).send({ error: 'Property not found' })
+    const updated = await fastify.mongo.db.collection('properties').findOne({ _id: objectId });
+
+    if (updated && updated._id && updated._id.toHexString) {
+        updated._id = updated._id.toHexString();
     }
 
-    return reply.code(200).send({ data: result.value });
+    if (result.matchedCount === 0) {
+        return reply.code(404).send({ error: 'Property not found' });
+    }
+
+    if (result.modifiedCount === 0) {
+        return reply.code(200).send({ message: 'No changes made — already up to date' });
+    }
+
+    return reply.code(200).send({ message: 'Property updated successfully', data: updated});
 };

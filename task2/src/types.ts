@@ -16,6 +16,7 @@ export type MontoProperty = { //not chacking anything when the code run
 export const MontoPropertySchema = { //json schema to validate
     type: "object",
     properties: {
+        _id: { type: "string" },
         name: { type: "string" },
         price: { type: "number" },
         types: { type: "array", items: { type: "string" } },
@@ -34,7 +35,6 @@ export type getPropertiesQuery = {
     offset?: number;               // Number of properties to skip (pagination)
     sortBy?: keyof MontoProperty;  // Field to sort by (should match MontoProperty keys)
     sortOrder?: 'asc' | 'desc';    // Sort order
-    id?: string;
     name?: string;
     price?: number | { gt?: number; gte?: number; lt?: number; lte?: number; eq?: number; ne?: number};
     types?: string | string[];     // Allow filtering by one or more types

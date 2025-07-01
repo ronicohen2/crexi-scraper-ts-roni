@@ -2,7 +2,6 @@ export const postPropertySchema = {
     body: {
       type: "object",
       properties: {
-        id: { type: "string" },
         name: { type: "string" },
         price: { type: "number", minimum: 0 },
         types: { type: "array", items: { type: "string" } },

@@ -2,9 +2,14 @@ import { FastifyReply, FastifyRequest } from 'fastify';
 import { getFromCache, setCache } from '../cache';
 import { mongoFilter } from '../mongoFilter';
 import { mongoSort } from '../mongoSort';
+import type { WithId } from 'mongodb';
 
-export async function getPropertiesHandler(fastify, request: FastifyRequest, reply: FastifyReply) {
-    if (!fastify.mongo.db) {
+export async function getPropertiesHandler(
+    fastify: any,
+    request: FastifyRequest,
+    reply: FastifyReply
+) {
+    if (!fastify.mongo?.db) {
         return reply.code(500).send({ error: 'Database not available' });
     }
 
@@ -22,24 +27,31 @@ export async function getPropertiesHandler(fastify, request: FastifyRequest, rep
     const sort = mongoSort(request.query);
 
     // Get total count of matching documents for pagination info
-    const total = await fastify.mongo.db.collection('properties').countDocuments(filter);
-
     // Fetch properties with pagination, filtering, and sorting
-    const properties = await fastify.mongo.db.collection('properties') //promise.all
-        .find(filter)
-        .sort(sort)
-        .skip(Number(offset))
-        .limit(Number(count))
-        .toArray();
+    const [total, properties] = await Promise.all([
+        fastify.mongo.db.collection('properties').countDocuments(filter),
+        fastify.mongo.db.collection('properties')
+            .find(filter)
+            .sort(sort)
+            .skip(Number(offset))
+            .limit(Number(count))
+            .toArray()
+    ]);
+
+    // Convert _id: ObjectId to _id: string for each property
+    const propertiesWithStringId = properties.map((property: any) => ({
+        ...property,
+        id: property._id.toString(),
+        _id: undefined
+    }));
 
     // Cache the response data
-    const responseData = { data: properties, total };
+    const responseData = { data: propertiesWithStringId, total };
     setCache(cacheKey, responseData);
 
     console.log('Filter:', filter);
     console.log('Total found:', total);
-    console.log('Properties:', properties);
-
+    console.log('Properties:', propertiesWithStringId);
 
     return reply.send(responseData);
 };
